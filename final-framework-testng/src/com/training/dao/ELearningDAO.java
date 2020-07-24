@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import com.training.bean.LoginBean;
+//import com.training.bean.LoginBean;
+import com.training.bean.RegisterBean;
 import com.training.connection.GetConnection;
 import com.training.utility.LoadDBDetails;
 
@@ -15,7 +16,6 @@ import com.training.utility.LoadDBDetails;
 public class ELearningDAO {
 	
 	Properties properties; 
-	
 	public ELearningDAO() {
 		 try {
 			properties = new Properties();
@@ -27,22 +27,32 @@ public class ELearningDAO {
 		}
 	}
 	
-	public List<LoginBean> getLogins(){
-		String sql = properties.getProperty("get.logins"); 
+	public List<RegisterBean> getLogins(){
+		String sql = properties.getProperty("get.registers"); 
 		
 		GetConnection gc  = new GetConnection(); 
-		List<LoginBean> list = null;
+		List<RegisterBean> list = null;
 		try {
 			gc.ps1 = GetConnection.getMySqlConnection(LoadDBDetails.getDBDetails()).prepareStatement(sql); 
-			list = new ArrayList<LoginBean>(); 
+			list = new ArrayList<RegisterBean>(); 
 			
 			gc.rs1 = gc.ps1.executeQuery(); 
 			
 			while(gc.rs1.next()) {
 			
-				LoginBean temp = new LoginBean(); 
-				temp.setUserName(gc.rs1.getString(1));
-				temp.setPassword(gc.rs1.getString(2));
+				RegisterBean temp = new RegisterBean(); 
+				temp.setFirstName(gc.rs1.getString(1));
+				temp.setLastName(gc.rs1.getString(2));
+				temp.setEmail(gc.rs1.getString(3));
+				temp.setTelephone(gc.rs1.getString(4));
+				temp.setAddress1(gc.rs1.getString(5));
+				temp.setAddress2(gc.rs1.getString(6));
+				temp.setCity(gc.rs1.getString(7));
+				temp.setPostCode(gc.rs1.getString(8));
+				temp.setCountry(gc.rs1.getString(9));
+				temp.setRegion(gc.rs1.getString(10));
+				temp.setPassword(gc.rs1.getString(11));
+				temp.setPasswordConfirm(gc.rs1.getString(12));
 
 				list.add(temp); 
 				
